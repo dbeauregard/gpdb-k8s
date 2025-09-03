@@ -3,7 +3,7 @@ Instructions to run Greenplum Database (GPDB) in Kubernetes (K8s).  We will be d
 
 # ARM-based Mac/OSX Setup
 ## Prerequisits
-1. Docker (client) installed (e.g., Homebrew) (podman *'should'* also work)
+1. Docker (client) installed (e.g., Homebrew or [Docker Desktop](https://www.docker.com/products/docker-desktop/)) (podman *'should'* also work)
 ```shell
 brew install docker
 ```
@@ -23,12 +23,12 @@ brew install helm
 6. Install the psql CLI (e.g., Homebrew)
   - You can install it with Postgres (or if you already have postgres you should already have psql)
 ```shell
-brew install postgresql
+brew install postgresql@17
 ```
   - Or you can install it standalone via libpq
 ```shell
 brew install libpq
-brew link --force libpq
+brew link --force libpq # not done by default
 ```
 
 ## Export Your Repository Credentials
@@ -40,8 +40,10 @@ brew link --force libpq
 6. View your Repository Credentials 
 7. Export your Credentials
 ```shell
-export GPDB_USER='user.email@company.com'
-export GPDB_PASSWORD='****'
+export GPDB_REPO_USER='user.email@company.com'
+```
+```shell
+export GPDB_REPO_PASSWORD='****'
 ```
 
 ## Run K8s in Colima
@@ -71,11 +73,11 @@ kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/
 ```
 3. Helm Login
 ```shell
-helm registry login -u $GPDB_USER -p $GPDB_PASSWORD tanzu-greenplum.packages.broadcom.com
+helm registry login -u $GPDB_REPO_USER -p $GPDB_REPO_PASSWORD tanzu-greenplum.packages.broadcom.com
 ```
 4. Set Docker Secret
 ```shell
-kubectl create secret docker-registry image-pull-secret -n gpdb --docker-server=tanzu-greenplum.packages.broadcom.com --docker-username=$GPDB_USER --docker-password=$GPDB_PASSWORD
+kubectl create secret docker-registry image-pull-secret -n gpdb --docker-server=tanzu-greenplum.packages.broadcom.com --docker-username=$GPDB_REPO_USER --docker-password=$GPDB_REPO_PASSWORD
 ```
 5. Helm Deploy (use the values.yaml in this repo)
 ```shell
