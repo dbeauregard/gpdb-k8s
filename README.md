@@ -80,11 +80,19 @@ helm registry login -u $GPDB_USER -p $GPDB_PASSWORD tanzu-greenplum.packages.bro
 ```shell
 kubectl create secret docker-registry image-pull-secret -n gpdb --docker-server=tanzu-greenplum.packages.broadcom.com --docker-username=$GPDB_USER --docker-password=$GPDB_PASSWORD
 ```
-
 5. Helm Deploy (use the values.yaml in this repo)
 ```shell
 helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/gp-operator-chart/gp-operator --version 1.0.0 -n gpdb -f values.yaml
 ```
+6. Wait until the pod is ready (1/1) and RUNNING
+```shell
+kubectl get po -n gpdb
+```
+  - details
+    ```shell
+    kubectl describe po gp-operator-controller-manager-<guid> -n gpdb
+    ```
+
 
 ### Deploy GPDB Cluster
 
