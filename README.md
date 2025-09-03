@@ -160,7 +160,7 @@ kubectl get pods -n gpdb
    - The Username will be: “gpmon“
    - For the Password run:
     ```shell
-    kubectl get secret gpcc-cc-creds -n gpdb -o jsonpath='{.data.*}' | base64 -d’ #ignore any shell appended % signs
+    kubectl get secret gpcc-cc-creds -n gpdb -o jsonpath='{.data.*}' | base64 -d #ignore any shell appended % signs
     ```
 5. Port-forward gpcc service to access gpcc locally 
 ```shell
