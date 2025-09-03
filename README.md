@@ -60,9 +60,9 @@ kubectl get nodes
 ```
 
 ## Deploy GPDB Operator
-[Docs Here](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/04-installation.html)
+[Official Docs Here](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/04-installation.html)
 
-Simple Instructions
+Simple Lab Instructions:
 1. Create a new namespace
 ```shell
 kubectl create ns gpdb
@@ -79,13 +79,18 @@ helm registry login -u $GPDB_REPO_USER -p $GPDB_REPO_PASSWORD tanzu-greenplum.pa
 ```shell
 kubectl create secret docker-registry image-pull-secret -n gpdb --docker-server=tanzu-greenplum.packages.broadcom.com --docker-username=$GPDB_REPO_USER --docker-password=$GPDB_REPO_PASSWORD
 ```
-5. Helm Deploy (use the values.yaml in this repo)
+5. Clone this repo
+```shell
+git clone https://github.com/dbeauregard/gpdb-k8s.git
+cd gpdb-k8s
+```
+6. Helm Deploy (use the values.yaml in this repo)
 ```shell
 helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/gp-operator-chart/gp-operator --version 1.0.0 -n gpdb -f values.yaml
 ```
-6. Wait until the pod is ready (1/1) and RUNNING
+7. Wait until the pod is ready (1/1) and RUNNING
 ```shell
-kubectl get po -n gpdb
+kubectl get po -n gpdb #add ‘-w’ to watch
 ```
   - details
     ```shell
@@ -107,14 +112,15 @@ kubectl create -f gp-minimal.yaml -n gpdb
 ```
 4. Check the status of the GP instances and pods.  Wait for them to be running.
 ```shell
-kubectl get pods -n gpdb (add ‘-w’ to watch)
+kubectl get pods -n gpdb #add ‘-w’ to watch
+```
+```shell
 kubectl describe pod <pod name> -n gpdb
 ```
-  - If you see an error about the unbound PVC (“pod has unbound immediate PersistentVolumeClaims”) you may need to modify the storageclass name in gp-minimal.yaml (2 places) and redeploy
+  - If you see an error about an unbound PVC (“pod has unbound immediate PersistentVolumeClaims”) you may need to modify the storageclass name in gp-minimal.yaml (2 places) and redeploy
   - Run `kubectl get pv,pvc,sc -n gpdb` to see the status and get the default storage class name.  It may be ‘local-path’, ‘standard’, ‘default’, etc.
-5. ‘kubectl get gp -n gpdb’
 6. You can also watch the operator logs with `k logs gp-operator-controller-manager-<guid> -n gpdb` (add ‘-f’ at the end to tail the logs) 
-7. Wait until the GP instance is 'READY'
+7. Wait until the GP instance is 'READY' (this can take ~10min)
 ```shell
 kubectl get gp -n gpdb
 ```
@@ -124,20 +130,23 @@ kubectl get gp -n gpdb
 ```shell
 kubectl port-forward gp-minimal-coordinator-0 5432:5432 -n gpdb #you can port-forward to different port if needed
 ```
+  - in another terminal tab/window
 ```shell
-‘psql postgres -h localhost -U gpadmin’
+psql postgres -h localhost -U gpadmin
 ```
   - You won’t need a password but for reference they are in the secret `gp-minimal-creds`
-2. OR Exec to the Container:
+2. OR Exec into the Container:
 ```shell
 kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash
 psql postgres
 ```
+3. In psql you can list the databases with `\l`, get help with `\?`, and exit with `\q`
 
-## Deploy GPCC
-1. 
+## Deploy Greenplum Command Center (GPCC) (Optional)
+**This is currently not working for me**
+1. Create the GPCC instance
 ```shell
-kubectl apply -f gpcc-minimal.yaml
+kubectl apply -f gpcc-minimal.yaml -n gpdb
 ```
 2. Check the GPCC status
 ```shell
@@ -151,7 +160,7 @@ kubectl get pods -n gpdb
    - The Username will be: “gpmon“
    - For the Password run:
     ```shell
-    ‘kubectl get secret gpcc-cc-creds -n gpdb -o jsonpath='{.data.*}' | base64 -d’ #ignore any shell appended % signs
+    kubectl get secret gpcc-cc-creds -n gpdb -o jsonpath='{.data.*}' | base64 -d’ #ignore any shell appended % signs
     ```
 5. Port-forward gpcc service to access gpcc locally 
 ```shell
@@ -160,7 +169,7 @@ kubectl port-forward svc/gpcc-cc-svc -n gpdb 8080:8080
 6. In a browser navigate to the url http://127.0.0.1:8080 and login
 
 ## Cleanup
-1. Stop Colima (pauses Colima and the K8s cluster)
+1. Stop Colima (pauses Colima and the K8s cluster; can be restarted later)
 ```shell
 colima stop
 ```
