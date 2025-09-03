@@ -1,0 +1,47 @@
+controllerManager:
+  operator:
+    args:
+    - --leader-elect
+    - --health-probe-bind-address=:8081
+    - --metrics-bind-address=:8443
+    - --webhook-cert-path=/tmp/k8s-webhook-server/serving-certs
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+    env:
+      certManagerClusterIssuerName: ""
+      certManagerNamespace: cert-manager
+    image:
+      repository: tanzu-greenplum.packages.broadcom.com/gp-operator
+      tag: v1.0.0
+    imagePullPolicy: Always
+    resources:
+      limits:
+        cpu: 200m
+        memory: 500Mi
+      requests:
+        cpu: 200m
+        memory: 500Mi
+  podSecurityContext:
+    runAsNonRoot: false
+  replicas: 1
+  serviceAccount:
+    annotations: {}
+imagePullSecrets: 
+- name: "image-pull-secret"
+kubernetesClusterDomain: cluster.local
+metricsService:
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: 8443
+  type: ClusterIP
+webhookService:
+  ports:
+  - port: 443
+    protocol: TCP
+    targetPort: 9443
+  type: ClusterIP
