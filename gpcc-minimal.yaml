@@ -10,4 +10,5 @@ metadata:
 spec:
   storageClassName: local-path
   greenplumClusterName: gp-minimal
+  sshTimeoutSeconds: 60
   storage: "2Gi"

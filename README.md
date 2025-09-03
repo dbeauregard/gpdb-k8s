@@ -3,9 +3,9 @@ Instructions to run Greenplum Database (GPDB) in Kubernetes (K8s).  We will be d
 
 # ARM-based Mac/OSX Setup
 ## Prerequisits
-1. Docker (client) Installed (e.g., Homebrew) (podman *'should'* also work)
+1. Docker (client) installed (e.g., Homebrew) (podman *'should'* also work)
 ```shell
-brew install Docker
+brew install docker
 ```
 2. Fully shutdown Docker/Podman (e.g., `Quit Docker Desktop` from the menu bar). It will conflict if running, but the client libraries must still be installed in the above step.
 3. kubectl installed (e.g., Homebrew)
@@ -21,20 +21,20 @@ brew install qemu colima lima-additional-guestagents
 brew install helm
 ```
 6. Install the psql CLI (e.g., Homebrew)
-   - You can install it with Postgres (or if you already have postgres you should already have psql)
-   ```shell
-   brew install postgresql
-   ```
-   - Or you can install it standalone via libpq
-   ```shell
-   brew install libpq
-   brew link --force libpq
-   ```
+  - You can install it with Postgres (or if you already have postgres you should already have psql)
+```shell
+brew install postgresql
+```
+  - Or you can install it standalone via libpq
+```shell
+brew install libpq
+brew link --force libpq
+```
 
 ## Export Your Repository Credentials
 1. Login to [support.broadcom.com](http://support.broadcom.com)
 2. Select 'My Downloads'
-3. Search for Greenplum and Select "VMware Tanzu Greenplum on Kubernetes"
+3. Search for Greenplum and Select ["VMware Tanzu Greenplum on Kubernetes"](https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware%20Tanzu%20Greenplum%20on%20Kubernetes)
 4. Expand (click on the right arrow '>') "VMware Tanzu Greenplum on Kubernetes"
 5. Click on the Green Sheild for the release (e.g., "1.0.0")
 6. View your Repository Credentials 
