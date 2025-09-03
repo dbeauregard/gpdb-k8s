@@ -95,6 +95,32 @@ kubectl get po -n gpdb
 
 
 ### Deploy GPDB Cluster
+1. Create the Greenplum Version
+```shell
+kubectl apply -f gpversion-7_5_2.yaml -n gpdb
+```
+2. Validate the Greenplum Version
+```shell
+kubectl get greenplumversion -n gpdb
+```
+3. Create the GPDB Minimal Cluster
+```shell
+kubectl create -f gp-minimal.yaml -n gpdb
+```
+4. Check the status of the GP instances and pods.  Wait for them to be running.
+```shell
+kubectl get pods -n gpdb (add ‘-w’ to watch)
+kubectl describe pod <pod name> -n gpdb
+```
+  - If you see an error about the unbound PVC (“pod has unbound immediate PersistentVolumeClaims”) you may need to modify the storageclass name in gp-minimal.yaml (2 places) and redeploy
+  - Run `kubectl get pv,pvc,sc -n gpdb` to see the status and get the default storage class name.  It may be ‘local-path’, ‘standard’, ‘default’, etc.
+5. ‘kubectl get gp -n gpdb’
+6. You can also watch the operator logs with `k logs gp-operator-controller-manager-<guid> -n gpdb` (add ‘-f’ at the end to tail the logs) 
+7. Wait until the GP instance is 'READY'
+```shell
+kubectl get gp -n gpdb
+```
+
 
 ### Deploy GPCC
 ---

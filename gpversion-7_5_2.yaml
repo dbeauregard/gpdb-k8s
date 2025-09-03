@@ -1,0 +1,21 @@
+# Sample for Greenplum Version 7.5.2
+apiVersion: greenplum.data.tanzu.vmware.com/v1
+kind: GreenplumVersion
+metadata:
+  labels:
+    app.kubernetes.io/name: gp-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: greenplumversion-7.5.2
+  namespace: gpdb
+spec:
+  dbVersion: 7.5.2
+  image: tanzu-greenplum.packages.broadcom.com/gp-instance:7.5.2
+  operatorVersion: 1.0.0
+  extensions:
+    - name: postgis
+      version: 3.3.2
+    - name: greenplum_backup_restore
+      version: 1.31.0
+  gpcc:
+    version: 7.5.0
+    image: tanzu-greenplum.packages.broadcom.com/gp-command-center:7.5.0
