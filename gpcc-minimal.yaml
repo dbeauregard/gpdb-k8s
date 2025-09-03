@@ -1,0 +1,12 @@
+# vi gpcc-minimal.yaml
+apiVersion: greenplum.data.tanzu.vmware.com/v1
+kind: GreenplumCommandCenter
+metadata:
+  labels:
+    app.kubernetes.io/name: gp-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: gpcc
+spec:
+  storageClassName: local-path
+  greenplumClusterName: gp-minimal
+  storage: "2Gi"

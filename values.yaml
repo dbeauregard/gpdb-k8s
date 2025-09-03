@@ -16,7 +16,7 @@ controllerManager:
     image:
       repository: tanzu-greenplum.packages.broadcom.com/gp-operator
       tag: v1.0.0
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     resources:
       limits:
         cpu: 200m

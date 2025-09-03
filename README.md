@@ -120,6 +120,21 @@ kubectl describe pod <pod name> -n gpdb
 ```shell
 kubectl get gp -n gpdb
 ```
+---
+### Connect with PSQL
+1. Locally:  (if postgres is running on your local machine the port 5432 will conflict and need to be changed in the below)
+```shell
+kubectl port-forward gp-minimal-coordinator-0 5432:5432 -n gpdb #you can port-forward to different port if needed
+```
+```shell
+‘psql postgres -h localhost -U gpadmin’
+```
+  - You won’t need a password but for reference they are in the secret `gp-minimal-creds`
+2. OR Exec to the Container:
+```shell
+kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash
+psql postgres
+```
 
 
 ### Deploy GPCC
