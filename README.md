@@ -1,8 +1,8 @@
 # GPDB on K8s
 Instructions to run Greenplum Database (GPDB) in Kubernetes (K8s).  We will be deploying GPDB to K8s locally on your laptop using the GPDB Operator which, by default, deploys one controller and one segment (as pods/containers).  The GPDB images require an x86_64 architecture.  On ARM based Macs we will be using Colima and QEMU, which provides emulation for ARM.  For Intel based Macs emulation won’t be needed and K8s can be used directly, i.e., via Kind or Minikube (Colima works here too).
 
-## ARM-based Mac/OSX Setup
-### Prerequisits
+# ARM-based Mac/OSX Setup
+## Prerequisits
 1. Docker (client) Installed (e.g., Homebrew) (podman *'should'* also work)
 ```shell
 brew install Docker
@@ -30,9 +30,8 @@ brew install helm
    brew install libpq
    brew link --force libpq
    ```
----
 
-### Export Your Repository Credentials
+## Export Your Repository Credentials
 1. Login to [support.broadcom.com](http://support.broadcom.com)
 2. Select 'My Downloads'
 3. Search for Greenplum and Select "VMware Tanzu Greenplum on Kubernetes"
@@ -44,9 +43,8 @@ brew install helm
 export GPDB_USER='user.email@company.com'
 export GPDB_PASSWORD='****'
 ```
----
 
-### Run K8s in Colima
+## Run K8s in Colima
 1. Start Colima
 ```shell
 colima start --arch x86_64 --kubernetes --cpu 4 --memory 4
@@ -58,9 +56,8 @@ colima start --arch x86_64 --kubernetes --cpu 4 --memory 4
 ```shell
 kubectl get nodes
 ```
----
 
-### Deploy GPDB Operator
+## Deploy GPDB Operator
 [Docs Here](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/04-installation.html)
 
 Simple Instructions
@@ -93,8 +90,7 @@ kubectl get po -n gpdb
     kubectl describe po gp-operator-controller-manager-<guid> -n gpdb
     ```
 
-
-### Deploy GPDB Cluster
+## Deploy GPDB Cluster
 1. Create the Greenplum Version
 ```shell
 kubectl apply -f gpversion-7_5_2.yaml -n gpdb
@@ -120,8 +116,8 @@ kubectl describe pod <pod name> -n gpdb
 ```shell
 kubectl get gp -n gpdb
 ```
----
-### Connect with PSQL
+
+## Connect with PSQL
 1. Locally:  (if postgres is running on your local machine the port 5432 will conflict and need to be changed in the below)
 ```shell
 kubectl port-forward gp-minimal-coordinator-0 5432:5432 -n gpdb #you can port-forward to different port if needed
@@ -136,9 +132,30 @@ kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash
 psql postgres
 ```
 
-
-### Deploy GPCC
----
+## Deploy GPCC
+1. 
+```shell
+kubectl apply -f gpcc-minimal.yaml
+```
+2. Check the GPCC status
+```shell
+kubectl get gpcc -n gpdb
+```
+3. Check the pod status
+```shell
+kubectl get pods -n gpdb 
+```
+4. Get GPCC user credentials 
+   - The Username will be: “gpmon“
+   - For the Password run:
+    ```shell
+    ‘kubectl get secret gpcc-cc-creds -n gpdb -o jsonpath='{.data.*}' | base64 -d’ #ignore any shell appended % signs
+    ```
+5. Port-forward gpcc service to access gpcc locally 
+```shell
+kubectl port-forward svc/gpcc-cc-svc -n gpdb 8080:8080
+```
+6. In a browser navigate to the url http://127.0.0.1:8080 and login
 
 ## Cleanup
 1. Stop Colima (pauses Colima and the K8s cluster)
