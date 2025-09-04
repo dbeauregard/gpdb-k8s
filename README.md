@@ -51,9 +51,7 @@ export GPDB_REPO_PASSWORD='****'
 ```shell
 colima start --arch x86_64 --kubernetes --cpu 4 --memory 4
 ```
-   - I suggest using --cpu 4 and –memory 4 to use 4 cores and 4GB or RAM with Colima but you can adjust as needed
-   b. If this fails make sure you have ‘lima-additional-guestagents’ installed and docker is NOT actively running on your laptop (must be installed, but not running)
-   - Validate K8s is up and running (e.g., ‘kubectl get nodes’)
+   - I suggest using --cpu 4 and –memory 4 to use 4 cores and 4GB or RAM with Colima but you can adjust as needed. If this fails make sure you have ‘lima-additional-guestagents’ installed and docker is NOT actively running on your laptop (must be installed, but not running)
 2. Validate K8s is up and running 
 ```shell
 kubectl get nodes
@@ -84,7 +82,7 @@ kubectl create secret docker-registry image-pull-secret -n gpdb --docker-server=
 git clone https://github.com/dbeauregard/gpdb-k8s.git
 cd gpdb-k8s
 ```
-6. Helm Deploy (use the values.yaml in this repo)
+6. Helm Deploy the GPDB Operator (uses the values.yaml in this repo)
 ```shell
 helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/gp-operator-chart/gp-operator --version 1.0.0 -n gpdb -f values.yaml
 ```
