@@ -59,7 +59,7 @@ kubectl get nodes
 ```
 
 ## Deploy GPDB Operator
-[Official Docs Here](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/04-installation.html)
+[Official Docs Here](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/04-installation.html) (for reference)
 
 Simple Lab Instructions:
 1. Create a new namespace
@@ -70,20 +70,20 @@ kubectl create ns gpdb
 ```shell
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.yaml
 ```
-3. Helm Login
+3. Helm Login to the Repo
 ```shell
 helm registry login -u $GPDB_REPO_USER -p $GPDB_REPO_PASSWORD tanzu-greenplum.packages.broadcom.com
 ```
-4. Set Docker Secret
+4. Set Docker Secret for the Repo
 ```shell
 kubectl create secret docker-registry image-pull-secret -n gpdb --docker-server=tanzu-greenplum.packages.broadcom.com --docker-username=$GPDB_REPO_USER --docker-password=$GPDB_REPO_PASSWORD
 ```
-5. Clone this repo
+5. Clone this Git Repository
 ```shell
 git clone https://github.com/dbeauregard/gpdb-k8s.git
 cd gpdb-k8s
 ```
-6. Helm Deploy the GPDB Operator (uses the values.yaml in this repo)
+6. Helm Deploy the GPDB Operator (uses the [values.yaml](values.yaml) in this repo.  Take a look!)
 ```shell
 helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/gp-operator-chart/gp-operator --version 1.0.0 -n gpdb -f values.yaml
 ```
@@ -97,7 +97,7 @@ kubectl get po -n gpdb #add ‘-w’ to watch
     ```
 
 ## Deploy GPDB Cluster
-1. Create the Greenplum Version
+1. Create the Greenplum Version (uses [gpversion-7_5_2.yaml](gpversion-7_5_2.yaml) Take a look!)
 ```shell
 kubectl apply -f gpversion-7_5_2.yaml -n gpdb
 ```
@@ -105,9 +105,9 @@ kubectl apply -f gpversion-7_5_2.yaml -n gpdb
 ```shell
 kubectl get greenplumversion -n gpdb
 ```
-3. Create the GPDB Minimal Cluster
+3. Create the GPDB Minimal Cluster (uses [gp-minimal.yaml](gp-minimal.yaml) Take a look!)
 ```shell
-kubectl create -f gp-minimal.yaml -n gpdb
+kubectl create -f gp-minimal.yaml -n gpdb 
 ```
 4. Check the status of the GP instances and pods.  Wait for them to be running.
 ```shell
@@ -143,17 +143,17 @@ psql postgres
 
 ## Deploy Greenplum Command Center (GPCC) (Optional)
 **This is currently not working for me**
-1. Create the GPCC instance
+1. Create the GPCC instance (uses [gpcc-minimal.yaml](gpcc-minimal.yaml) Take a look!)
 ```shell
 kubectl create -f gpcc-minimal.yaml -n gpdb
 ```
-2. Check the GPCC status
-```shell
-kubectl get gpcc -n gpdb
-```
-3. Check the pod status
+2. Check the pod status
 ```shell
 kubectl get pods -n gpdb 
+```
+3. Check the GPCC status
+```shell
+kubectl get gpcc -n gpdb
 ```
 4. Get GPCC user credentials 
    - The Username will be: “gpmon“
