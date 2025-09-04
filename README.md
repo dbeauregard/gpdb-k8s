@@ -49,9 +49,10 @@ export GPDB_REPO_PASSWORD='****'
 ## Run K8s in Colima
 1. Start Colima
 ```shell
-colima start --arch x86_64 --kubernetes --cpu 4 --memory 4
+colima start --arch x86_64 --kubernetes --cpu 6 --memory 6
 ```
-   - I suggest using --cpu 4 and –memory 4 to use 4 cores and 4GB or RAM with Colima but you can adjust as needed. If this fails make sure you have ‘lima-additional-guestagents’ installed and docker is NOT actively running on your laptop (must be installed, but not running)
+   - I suggest using 6 cores and 6GB or RAM with Colima but you can adjust as needed. 
+   - If this fails make sure you have ‘lima-additional-guestagents’ installed and docker is NOT actively running on your laptop (must be installed, but not running)
 2. Validate K8s is up and running 
 ```shell
 kubectl get nodes
@@ -144,7 +145,7 @@ psql postgres
 **This is currently not working for me**
 1. Create the GPCC instance
 ```shell
-kubectl apply -f gpcc-minimal.yaml -n gpdb
+kubectl create -f gpcc-minimal.yaml -n gpdb
 ```
 2. Check the GPCC status
 ```shell
