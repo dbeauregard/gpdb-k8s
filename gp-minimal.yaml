@@ -12,7 +12,7 @@ spec:
   imagePullSecrets:
     - image-pull-secret
   coordinator:
-    storageClassName: local-path
+    storageClassName: local-path # Update this to use your storageClass
     service:
       type: NodePort
     storage: 1Gi
@@ -22,6 +22,6 @@ spec:
         value: logical
 
   segments:
-    count: 1
+    count: 1 # Number or GPDB Segments
     storageClassName: local-path # Update this to use your storageClass
     storage: 10Gi # Storage per segment
