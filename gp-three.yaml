@@ -1,0 +1,27 @@
+apiVersion: greenplum.data.tanzu.vmware.com/v1
+kind: GreenplumCluster
+metadata:
+  labels:
+    app.kubernetes.io/name: greenplum-cluster-operator
+    app.kubernetes.io/component: greenplum-operator
+    app.kubernetes.io/part-of: gp-operator
+  name: gp-three
+  namespace: gpdb
+spec:
+  version: greenplumversion-7.5.2
+  imagePullSecrets:
+    - image-pull-secret
+  coordinator:
+    storageClassName: local-path
+    service:
+      type: NodePort
+    storage: 1Gi
+  global:
+    gucSettings:
+      - key: wal_level
+        value: logical
+
+  segments:
+    count: 3
+    storageClassName: local-path # Update this to use your storageClass
+    storage: 10Gi # Storage per segment
