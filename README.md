@@ -1,7 +1,9 @@
 # GPDB on K8s
 Instructions to run Greenplum Database (GPDB) in Kubernetes (K8s).  We will be deploying GPDB to K8s locally on your laptop using the GPDB Operator which, by default, deploys one controller and one segment (as pods/containers).  The GPDB images require an x86_64 architecture.  On ARM based Macs we will be using Colima and QEMU, which provides emulation for ARM.  For Intel based Macs emulation won’t be needed and K8s can be used directly, i.e., via Kind or Minikube (Colima works here too).
 
-# ARM-based Mac/OSX Setup
+# Mac/OSX Setup
+The below will work on both ARM and Intel based Macs.  If you are running an Intel based Mac you can alternatively use other K8s deployments, i.e., Kind or MiniKube, instead of Colima below.  Also, if you have an Intel based K8s deployment running elsewhere (e.g., in a lab) you can use that instead of a local Colima deployment.
+
 ## Prerequisits
 1. Docker (client) installed (e.g., Homebrew or [Docker Desktop](https://www.docker.com/products/docker-desktop/)) (podman *'should'* also work)
 ```shell
