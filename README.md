@@ -140,6 +140,7 @@ kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash
 psql postgres
 ```
 3. In psql you can list the databases with `\l`, get help with `\?`, and exit with `\q`
+4. See [data.md](data.md) for more SQL and a simple example
 
 ## Deploy Greenplum Command Center (GPCC) (Optional)
 **This is currently not working for me**

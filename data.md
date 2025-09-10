@@ -1,16 +1,17 @@
-## Run the example
+## Useful PSQL Commands
+### Connect via PSQL
+```bash
+psql postgres -h localhost -U gpadmin
+```
+
+### Run the example
 ```sql
 CREATE DATABASE retail;
 \c retail
 \i example.sql
 ```
 
-## Useful PSQL Commands
-* Connect via PSQL
-```bash
-psql postgres -h localhost -U gpadmin
-```
-
+### PSQL Short Commands & Keywords
 | Command | Description |
 |:-------:|-------------|
 |\l| list databases |
@@ -60,26 +61,27 @@ select pg_relation_size('retail_demo.dim_date');
 SELECT get_ao_compression_ratio('fact_sales');
 ```
 
-## DISTRIBUTED
+## GPDB Tabel Options
+### DISTRIBUTED
 * `DISTRIBUTED RANDOMLY` (avoid)
 * `DISTRIBUTED BY(column)`
 * `DISTRIBUTED REPLICATED` (100,000 Rows)
 
-## appendonly
+### appendonly
 * Heap Table: `WITH (appendonly=false)`
 * AO Table: `WITH (appendonly=true)`
 
-## orientation
+### orientation
 * column `WITH(orientation=column)`
 * row `WITH(orientation=row)`
 
-## compresstype
+### compresstype
 * none `WITH(compresstype=none)`
 * QuickLZ `WITH(compresstype=quicklz)`
 * Zlib `WITH(compresstype=zlib)`
 * Zstd `WITH(compresstype=zstd)`
 
-## compresslevel
+### compresslevel
 * (1-9) `WITH(compresslevel=5)`
 
-## PARTITION BY
+### PARTITION BY
