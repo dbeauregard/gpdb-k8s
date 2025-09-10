@@ -8,6 +8,7 @@ psql postgres -h localhost -U gpadmin
 ```sql
 CREATE DATABASE retail;
 \c retail
+SET search_path TO retail,user;
 \i example.sql
 ```
 
