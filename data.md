@@ -24,6 +24,7 @@ SET search_path TO retail,user;
 |\dt| list tables |
 |\!| run shell cmd |
 |\! clear| clear screen|
+|^L| clear screen (ctrl + l) |
 |--| comment|
 |\echo "txt"| echo text|
 |EXPLAIN| explain the query|

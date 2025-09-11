@@ -99,7 +99,7 @@ kubectl get po -n gpdb #add ‘-w’ to watch
     ```
 
 ## Deploy GPDB Cluster
-1. Create the Greenplum Version (uses [gpversion-7_5_2.yaml](gpversion-7_5_2.yaml) Take a look!)
+1. Create the Greenplum Version (uses [gpversion-7_5_2.yaml](gpversion-7_5_2.yaml). Take a look!)
 ```shell
 kubectl apply -f gpversion-7_5_2.yaml -n gpdb
 ```
@@ -107,7 +107,7 @@ kubectl apply -f gpversion-7_5_2.yaml -n gpdb
 ```shell
 kubectl get greenplumversion -n gpdb
 ```
-3. Create the GPDB Minimal Cluster (uses [gp-minimal.yaml](gp-minimal.yaml) Take a look!)
+3. Create the GPDB Minimal Cluster (uses [gp-minimal.yaml](gp-minimal.yaml). Take a look!)
 ```shell
 kubectl create -f gp-minimal.yaml -n gpdb 
 ```
@@ -146,7 +146,7 @@ psql postgres
 
 ## Deploy Greenplum Command Center (GPCC) (Optional)
 **This is currently not working for me**
-1. Create the GPCC instance (uses [gpcc-minimal.yaml](gpcc-minimal.yaml) Take a look!)
+1. Create the GPCC instance (uses [gpcc-minimal.yaml](gpcc-minimal.yaml). Take a look!)
 ```shell
 kubectl create -f gpcc-minimal.yaml -n gpdb
 ```
