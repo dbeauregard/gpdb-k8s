@@ -28,6 +28,7 @@ SET search_path TO retail,user;
 |--| comment|
 |\echo "txt"| echo text|
 |EXPLAIN| explain the query|
+|EXPLAIN ANALYZE| explain & RUN the query|
 |ANALYZE| generate internal stats|
 |VACUUM| cleanup/reclaims space|
 
@@ -79,9 +80,9 @@ SELECT get_ao_compression_ratio('fact_sales');
 
 ### compresstype
 * none `WITH(compresstype=none)`
-* QuickLZ `WITH(compresstype=quicklz)`
-* Zlib `WITH(compresstype=zlib)`
-* Zstd `WITH(compresstype=zstd)`
+* QuickLZ `WITH(compresstype=quicklz)` - fast
+* Zlib `WITH(compresstype=zlib)` - compact
+* Zstd `WITH(compresstype=zstd)` - recomended 
 
 ### compresslevel
 * (1-9) `WITH(compresslevel=5)`
