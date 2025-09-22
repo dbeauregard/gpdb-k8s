@@ -40,6 +40,7 @@ brew link --force libpq # not done by default
 4. Expand (click on the right arrow '>') "VMware Tanzu Greenplum on Kubernetes"
 5. Click on the Green Sheild for the release (e.g., "1.0.0")
 ![GPDB-Shield](images/GPDB-Shield.png)
+
 6. View your Repository Credentials 
 7. Export your Credentials
 ```shell
