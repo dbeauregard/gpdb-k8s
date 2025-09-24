@@ -132,7 +132,7 @@ kubectl describe pod <pod name> -n gpdb
   - If you see an error about an unbound PVC (“pod has unbound immediate PersistentVolumeClaims”) you may need to modify the storageclass name in gp-minimal.yaml (2 places) and redeploy
   - Run `kubectl get pv,pvc,sc -n gpdb` to see the status and get the default storage class name.  It may be ‘local-path’, ‘standard’, ‘default’, etc.
 6. You can also watch the operator logs with `k logs gp-operator-controller-manager-<guid> -n gpdb` (add ‘-f’ at the end to tail the logs) 
-7. Wait until the GP instance is 'READY' (this can take ~10min)
+7. Wait until the GP instance is 'READY' (this can take ~10min and you may see transient errors/warnings)
 ```shell
 kubectl get gp -n gpdb
 ```
@@ -155,6 +155,8 @@ psql postgres
 ```
 3. In psql you can list the databases with `\l`, get help with `\?`, and exit with `\q`
 4. See [data.md](data.md) for more SQL and a simple example
+
+![PSQL](images/PSQL.png)
 
 ## Deploy Greenplum Command Center (GPCC) (Optional)
 **This is currently not working for me**
