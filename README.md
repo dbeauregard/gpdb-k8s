@@ -54,8 +54,9 @@ export GPDB_REPO_PASSWORD='****'
 ## Run K8s in Colima
 1. Start Colima
 ```shell
-colima start --arch x86_64 --kubernetes --cpu 6 --memory 6
+colima start --arch x86_64 --kubernetes --cpu 6 --memory 6 --kubernetes-version v1.33.3+k3s1
 ```
+   - 9/24/25: adding "--kubernetes-version v1.33.3+k3s1" flag as the latest version 1.33.4 appears to cause cert manager to fail due to a root pod security policy
    - I suggest using 6 cores and 6GB or RAM with Colima but you can adjust as needed. 
    - If this fails make sure you have ‘lima-additional-guestagents’ installed and docker is NOT actively running on your laptop (must be installed, but not running)
 2. Validate K8s is up and running 
@@ -76,6 +77,10 @@ kubectl create ns gpdb
 ```shell
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.yaml
 ```
+   - Verify and wait for the Cert Manager pods to be healthy
+   ```shell
+   kubectl get pods -n cert-manager #add ‘-w’ to watch
+   ```
 3. Helm Login to the Repo
 ```shell
 helm registry login -u $GPDB_REPO_USER -p $GPDB_REPO_PASSWORD tanzu-greenplum.packages.broadcom.com
@@ -181,5 +186,5 @@ colima stop
 ```
 2. Delete Colima (deletes the Colima deployment and K8s cluster)
 ```shell
-colima delete
+colima delete --data
 ```
