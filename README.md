@@ -63,7 +63,7 @@ colima start --arch x86_64 --kubernetes --cpu 6 --memory 6 --kubernetes-version 
 ```shell
 kubectl get nodes
 ```
-![Colima Start](images/Colima-start.png)
+![Colima Start](images/Colima-Start.png)
 
 ## Deploy GPDB Operator
 [Official Docs Here](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/04-installation.html) (for reference)
@@ -78,9 +78,9 @@ kubectl create ns gpdb
 kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.yaml
 ```
    - Verify and wait for the Cert Manager pods to be healthy
-   ```shell
-   kubectl get pods -n cert-manager #add ‘-w’ to watch
-   ```
+      ```shell
+      kubectl get pods -n cert-manager #add ‘-w’ to watch
+      ```
 3. Helm Login to the Repo
 ```shell
 helm registry login -u $GPDB_REPO_USER -p $GPDB_REPO_PASSWORD tanzu-greenplum.packages.broadcom.com
@@ -106,6 +106,7 @@ kubectl get po -n gpdb #add ‘-w’ to watch
     ```shell
     kubectl describe po gp-operator-controller-manager-<guid> -n gpdb
     ```
+![GPDB Operator](images/GPDB-Operator.png)
 
 ## Deploy GPDB Cluster
 1. Create the Greenplum Version (uses [gpversion-7_5_2.yaml](gpversion-7_5_2.yaml). Take a look!)
@@ -117,6 +118,7 @@ kubectl apply -f gpversion-7_5_2.yaml -n gpdb
 kubectl get greenplumversion -n gpdb
 ```
 3. Create the GPDB Minimal Cluster (uses [gp-minimal.yaml](gp-minimal.yaml). Take a look!)
+  - Use [gp-three.yaml](gp-three.yaml) instead for a 3 segment cluster.
 ```shell
 kubectl create -f gp-minimal.yaml -n gpdb 
 ```
@@ -134,6 +136,7 @@ kubectl describe pod <pod name> -n gpdb
 ```shell
 kubectl get gp -n gpdb
 ```
+![GPDB Cluster](images/GPDB-Cluster.png)
 
 ## Connect with PSQL
 1. Locally:  (if postgres is running on your local machine the port 5432 will conflict and need to be changed in the below)
@@ -156,6 +159,7 @@ psql postgres
 ## Deploy Greenplum Command Center (GPCC) (Optional)
 **This is currently not working for me**
 1. Create the GPCC instance (uses [gpcc-minimal.yaml](gpcc-minimal.yaml). Take a look!)
+- Use [gpcc-three.yaml](gpcc-three.yaml) instead if you created a 3 segment cluster above.
 ```shell
 kubectl create -f gpcc-minimal.yaml -n gpdb
 ```
