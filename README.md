@@ -62,6 +62,7 @@ colima start --arch x86_64 --kubernetes --cpu 6 --memory 6
 ```shell
 kubectl get nodes
 ```
+![Colima Start](images/Colima-start.png)
 
 ## Deploy GPDB Operator
 [Official Docs Here](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/04-installation.html) (for reference)
