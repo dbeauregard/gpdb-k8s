@@ -4,7 +4,7 @@
 psql postgres -h localhost -U gpadmin
 ```
 
-### Run the example
+### Run this example [example.sql](example.sql)
 ```sql
 CREATE DATABASE retail;
 \c retail
@@ -17,7 +17,7 @@ SET search_path TO retail,public;
 |:-------:|-------------|
 |\l| list databases |
 |\h| help with SQL |
-|\?| help with PSQL |
+|\\?| help with PSQL |
 |\q| quit/exit|
 |\dn| list schemas |
 |\d| list all objects |
@@ -35,7 +35,7 @@ SET search_path TO retail,public;
 * Use '+' to get additional info, i.e., `\dt+`
 * View search_path `SHOW search_path;`
 * set search_path (temp) `SET search_path TO xyz_schema,default;`
-* set search_path (perm) `ALTER DATABASE retail SET search_path TO xyz_schema,public;`
+* set search_path (perm, must reconnect) `ALTER DATABASE retail SET search_path TO xyz_schema,public;`
 * Create database and connect
     ```sql
     CREATE DATABASE retail;
