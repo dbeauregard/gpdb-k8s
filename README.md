@@ -96,7 +96,7 @@ cd gpdb-k8s
 ```
 6. Helm Deploy the GPDB Operator (uses the [values.yaml](values.yaml) in this repo.  Take a look!)
 ```shell
-helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/gp-operator-chart/gp-operator --version 1.0.0 -n gpdb -f values.yaml
+helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/gp-operator-chart/gp-operator --version 1.0.1 -n gpdb -f values.yaml
 ```
 7. Wait until the pod is ready (1/1) and RUNNING
 ```shell

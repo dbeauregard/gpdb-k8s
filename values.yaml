@@ -15,7 +15,7 @@ controllerManager:
       certManagerNamespace: cert-manager
     image:
       repository: tanzu-greenplum.packages.broadcom.com/gp-operator
-      tag: v1.0.0
+      tag: v1.0.1
     imagePullPolicy: IfNotPresent
     resources:
       limits:
@@ -25,7 +25,7 @@ controllerManager:
         cpu: 200m
         memory: 500Mi
   podSecurityContext:
-    runAsNonRoot: false
+    runAsNonRoot: true
   replicas: 1
   serviceAccount:
     annotations: {}

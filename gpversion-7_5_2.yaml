@@ -10,7 +10,7 @@ metadata:
 spec:
   dbVersion: 7.5.2
   image: tanzu-greenplum.packages.broadcom.com/gp-instance:7.5.2
-  operatorVersion: 1.0.0
+  operatorVersion: 1.0.1
   extensions:
     - name: postgis
       version: 3.3.2
