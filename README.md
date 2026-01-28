@@ -150,8 +150,7 @@ psql postgres -h localhost -U gpadmin
   - You won’t need a password but for reference they are in the secret `gp-minimal-creds`
 2. OR Exec into the Container:
 ```shell
-kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash
-psql postgres
+kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash psql postgres
 ```
 3. In psql you can list the databases with `\l`, get help with `\?`, and exit with `\q`
 4. See [data.md](data.md) for more SQL and a simple example
