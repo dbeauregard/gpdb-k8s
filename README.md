@@ -36,14 +36,10 @@ brew link --force libpq # not done by default
 ## Export Your Repository Credentials
 1. Login to [support.broadcom.com](http://support.broadcom.com)
 2. Select 'My Downloads'
-3. Search for Greenplum and Select ["VMware Tanzu Greenplum on Kubernetes"](https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware%20Tanzu%20Greenplum%20on%20Kubernetes)
-4. Expand (click on the right arrow **'>'**) "VMware Tanzu Greenplum on Kubernetes"
-5. Click on the Green Sheild for the release (e.g., "1.0.0")  
-
-![GPDB Shield](images/GPDB-Shield.png)
-
-6. View your Repository Credentials ('User Name' and 'Password / Access Token')
-7. Export your Credentials
+3. See the updated token generation process 
+    - KB: https://knowledge.broadcom.com/external/article?articleId=421110
+    - Docs: https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-gemfire-on-kubernetes/2-6/gf-k8s/install.html
+4. Export your Credentials
 ```shell
 export GPDB_REPO_USER='user.email@company.com'
 ```
