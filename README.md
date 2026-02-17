@@ -54,9 +54,9 @@ export GPDB_REPO_PASSWORD='****'
 ## Run K8s in Colima
 1. Start Colima
 ```shell
-colima start --arch x86_64 --kubernetes --cpu 6 --memory 6 --kubernetes-version v1.33.3+k3s1
+colima start --arch x86_64 --kubernetes --cpu 6 --memory 6
 ```
-   - 9/24/25: adding "--kubernetes-version v1.33.3+k3s1" flag as the latest version 1.33.4 appears to cause cert manager to fail due to a root pod security policy
+   - You can specify the K8s version with this flag: ```--kubernetes-version v1.35.1+k3s1```.  2/17/26: the latest/default (v1.35.1+k3s1) works.  9/24/25: "v1.33.3+k3s1" works but 1.33.4 appears to cause cert manager to fail due to a root pod security policy
    - I suggest using 6 cores and 6GB or RAM with Colima but you can adjust as needed. 
    - If this fails make sure you have ‘lima-additional-guestagents’ installed and docker is NOT actively running on your laptop (must be installed, but not running)
 2. Validate K8s is up and running 
