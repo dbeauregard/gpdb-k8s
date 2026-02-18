@@ -42,7 +42,7 @@ brew link --force libpq # not done by default
 ![Registry Token](images/Registry-Token.png)
 6. For more details, see the updated token generation process 
     - [KB](https://knowledge.broadcom.com/external/article?articleId=421110)
-    - [Docs](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-gemfire-on-kubernetes/2-6/gf-k8s/install.html)
+    - [Docs](https://techdocs.broadcom.com/us/en/vmware-tanzu/data-solutions/tanzu-greenplum-k8s/1-0/tgp-on-k8s/10-artifactory-token-download.html)
 7. Export your Credentials
 ```shell
 export GPDB_REPO_USER='user.email@company.com'
@@ -56,7 +56,9 @@ export GPDB_REPO_PASSWORD='****'
 ```shell
 colima start --arch x86_64 --kubernetes --cpu 6 --memory 6
 ```
-   - You can specify the K8s version with this flag: ```--kubernetes-version v1.35.1+k3s1```.  2/17/26: the latest/default (v1.35.1+k3s1) works.  9/24/25: "v1.33.3+k3s1" works but 1.33.4 appears to cause cert manager to fail due to a root pod security policy
+   - You can specify the K8s version with this flag: ```--kubernetes-version v1.35.1+k3s1```.  
+     - 2/17/26: the latest/default (v1.35.1+k3s1) is working
+     - 9/24/25: "v1.33.3+k3s1" works but 1.33.4 appears to cause cert manager to fail due to a root pod security policy
    - I suggest using 6 cores and 6GB or RAM with Colima but you can adjust as needed. 
    - If this fails make sure you have ‘lima-additional-guestagents’ installed and docker is NOT actively running on your laptop (must be installed, but not running)
 2. Validate K8s is up and running 
@@ -167,21 +169,24 @@ kubectl create -f gpcc-minimal.yaml -n gpdb
 ```shell
 kubectl get pods -n gpdb 
 ```
-3. Check the GPCC status
+  - If you see an error about an unbound PVC (“pod has unbound immediate PersistentVolumeClaims”) you may need to modify the storageclass name in gpcc-minimal.yaml and redeploy
+  - Run `kubectl get pv,pvc,sc -n gpdb` to see the status and get the default storage class name.  It may be ‘local-path’, ‘standard’, ‘default’, etc.
+3. You can also watch the operator logs with `k logs gp-operator-controller-manager-<guid> -n gpdb` (add ‘-f’ at the end to tail the logs) 
+4. Check the GPCC status and wait until the GPCC instance is 'READY' 
 ```shell
 kubectl get gpcc -n gpdb
 ```
-4. Get GPCC user credentials 
+5. Get GPCC user credentials 
    - The Username will be: “gpmon“
    - For the Password run:
     ```shell
     kubectl get secret gpcc-cc-creds -n gpdb -o jsonpath='{.data.*}' | base64 -d #ignore any shell appended % signs
     ```
-5. Port-forward gpcc service to access gpcc locally 
+6. Port-forward gpcc service to access gpcc locally 
 ```shell
 kubectl port-forward svc/gpcc-cc-svc -n gpdb 8080:8080
 ```
-6. In a browser navigate to the url http://127.0.0.1:8080 and login
+7. In a browser navigate to the url http://127.0.0.1:8080 and login
 
 ## Cleanup
 1. Stop Colima (pauses Colima and the K8s cluster; can be restarted later)
