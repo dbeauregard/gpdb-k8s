@@ -14,8 +14,8 @@ controllerManager:
       certManagerClusterIssuerName: ""
       certManagerNamespace: cert-manager
     image:
-      repository: tanzu-greenplum.packages.broadcom.com/gp-operator
-      tag: v1.0.1
+      repository: tanzu-greenplum.packages.broadcom.com/v1.0.3/gp-operator
+      tag: v1.0.3
     imagePullPolicy: IfNotPresent
     resources:
       limits:

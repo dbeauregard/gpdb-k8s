@@ -10,5 +10,5 @@ metadata:
 spec:
   storageClassName: local-path # Update this to use your storageClass
   greenplumClusterName: gp-minimal
-  sshTimeoutSeconds: 60
-  storage: "2Gi"
+  # sshTimeoutSeconds: 60
+  storage: "4Gi"

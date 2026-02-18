@@ -96,7 +96,7 @@ cd gpdb-k8s
 ```
 6. Helm Deploy the GPDB Operator (uses the [values.yaml](values.yaml) in this repo.  Take a look!)
 ```shell
-helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/gp-operator-chart/gp-operator --version 1.0.1 -n gpdb -f values.yaml
+helm install gp-operator oci://tanzu-greenplum.packages.broadcom.com/v1.0.3/gp-operator-chart/gp-operator --version 1.0.3 -n gpdb -f values.yaml
 ```
 7. Wait until the pod is ready (1/1) and RUNNING
 ```shell
@@ -150,7 +150,7 @@ psql postgres -h localhost -U gpadmin
   - You won’t need a password but for reference they are in the secret `gp-minimal-creds`
 2. OR Exec into the Container:
 ```shell
-kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash psql postgres
+kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash -c "/usr/local/greenplum-db-7.5.2/bin/psql postgres"
 ```
 3. In psql you can list the databases with `\l`, get help with `\?`, and exit with `\q`
 4. See [data.md](data.md) for more SQL and a simple example
@@ -160,7 +160,6 @@ kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash psql postgres
 ## Deploy Greenplum Command Center (GPCC) (Optional)
 **This is currently not working for me**
 1. Create the GPCC instance (uses [gpcc-minimal.yaml](gpcc-minimal.yaml). Take a look!)
-- [or] Use [gpcc-three.yaml](gpcc-three.yaml) instead if you created a 3 segment cluster above.
 ```shell
 kubectl create -f gpcc-minimal.yaml -n gpdb
 ```

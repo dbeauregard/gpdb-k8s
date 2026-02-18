@@ -5,7 +5,7 @@ metadata:
     app.kubernetes.io/name: greenplum-cluster-operator
     app.kubernetes.io/component: greenplum-operator
     app.kubernetes.io/part-of: gp-operator
-  name: gp-three
+  name: gp-minimal
   namespace: gpdb
 spec:
   version: greenplumversion-7.5.2
