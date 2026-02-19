@@ -160,7 +160,7 @@ kubectl exec -it gp-minimal-coordinator-0 -n gpdb -- /bin/bash -c "/usr/local/gr
 ![PSQL](images/PSQL.png)
 
 ## Deploy Greenplum Command Center (GPCC) (Optional)
-**This is currently not working for me**
+**The GPCC internal setup frequently times out for me and fails making it unsuable.  Leaving it overnight sometimes works.  Your experience may vary.**
 1. Create the GPCC instance (uses [gpcc-minimal.yaml](gpcc-minimal.yaml). Take a look!)
 ```shell
 kubectl create -f gpcc-minimal.yaml -n gpdb
@@ -187,6 +187,7 @@ kubectl get gpcc -n gpdb
 kubectl port-forward svc/gpcc-cc-svc -n gpdb 8080:8080
 ```
 7. In a browser navigate to the url http://127.0.0.1:8080 and login
+  - This works for me in Firefox and Chrome, but not Safari (2/19/26)
 
 ## Cleanup
 1. Stop Colima (pauses Colima and the K8s cluster; can be restarted later)
